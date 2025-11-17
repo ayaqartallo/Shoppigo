@@ -4,9 +4,10 @@ import { stripe } from "@/lib/stripe"
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
+
   if (!id) {
     throw new Error("Product ID is missing!");
   }
