@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Stripe from "stripe";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -9,7 +10,9 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
-  const price = product.default_price as Stripe.Price;
+  const price = product.default_price as Stripe.Price | undefined;
+
+  if (!product.id) return null; 
 
   return (
     <Link href={`/Products/${product.id}`} className="block h-full">
@@ -35,9 +38,7 @@ const ProductCard = ({ product }: Props) => {
         {/* Card Content */}
         <CardContent className="p-4 flex flex-col flex-grow justify-between gap-3">
           {product.description && (
-            <p className="text-gray-700 text-base line-clamp-3">
-              {product.description}
-            </p>
+            <p className="text-gray-700 text-base line-clamp-3">{product.description}</p>
           )}
 
           {price?.unit_amount && (
