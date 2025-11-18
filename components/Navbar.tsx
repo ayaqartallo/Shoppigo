@@ -12,9 +12,11 @@ import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 
 const Navbar = () => {
- const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const { items } = useCartStore();
   const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
+
   const pathname = usePathname();
 
   useEffect(() => {
@@ -26,9 +28,11 @@ const Navbar = () => {
   }, []);
 
   if (pathname.startsWith("/auth")) return null;
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100 transition-all">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
+
         {/* Logo */}
         <Link
           href="/"
@@ -39,28 +43,22 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-8 font-medium text-gray-700">
-          <Link
-            href="/"
-            className="hover:text-blue-600 transition-colors duration-200"
-          >
+          <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
             Home
           </Link>
-          <Link
-            href="/Products"
-            className="hover:text-blue-600 transition-colors duration-200"
-          >
+
+          <Link href="/Products" className="hover:text-blue-600 transition-colors duration-200">
             Products
           </Link>
-          <Link
-            href="/Checkout"
-            className="hover:text-blue-600 transition-colors duration-200"
-          >
+
+          <Link href="/Checkout" className="hover:text-blue-600 transition-colors duration-200">
             Checkout
           </Link>
         </div>
 
         {/* Right Side */}
         <div className="flex items-center space-x-4">
+
           {/* Cart */}
           <Link href="/Checkout" className="relative group">
             <ShoppingCartIcon className="h-6 w-6 text-gray-700 group-hover:text-blue-600 transition-colors" />
@@ -69,6 +67,13 @@ const Navbar = () => {
                 {cartCount}
               </span>
             )}
+          </Link>
+
+          {/* Login Button Desktop */}
+          <Link href="/auth/login" className="hidden md:block">
+            <Button className="px-6 py-2 rounded-full bg-gray-600 text-white hover:bg-gray-700">
+              Login
+            </Button>
           </Link>
 
           {/* Mobile Menu Toggle */}
@@ -99,6 +104,7 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
+
             <li>
               <Link
                 href="/Products"
@@ -108,6 +114,7 @@ const Navbar = () => {
                 Products
               </Link>
             </li>
+
             <li>
               <Link
                 href="/Checkout"
@@ -115,6 +122,19 @@ const Navbar = () => {
                 onClick={() => setMobileOpen(false)}
               >
                 Checkout
+              </Link>
+            </li>
+
+            {/* Login Button Mobile */}
+            <li>
+              <Link
+                href="/auth/login"
+                onClick={() => setMobileOpen(false)}
+                className="block"
+              >
+                <Button className="w-full rounded-full bg-gray-600 text-white hover:bg-gray-700 py-2">
+                  Login
+                </Button>
               </Link>
             </li>
           </ul>
